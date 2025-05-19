@@ -4,3 +4,4 @@ reference_API/tasks.db
 reference_API/__pycache__/
 testing/.env
 reference_API/CLAUDE.md
+reference_API/tasks.db.bak
