@@ -24,7 +24,7 @@ def generate_task_ideas(keywords: List[str], num_tasks: int, list_name: str = No
         "  \"recurrence_end_date\": string|null (ISO 8601),\n"
         "  \"due_date\": string|null (ISO 8601)\n"
         "}\n"
-        f"Use the list name: '{list_name if list_name else 'Personal'}' for all tasks.\n"
+        f"Use the list name: '{list_name if list_name else 'Personal'}' for all tasks. Create dates in the month of May 2025.\n"
         "Return a JSON array of task objects, not code blocks or explanations."
     )
 
