@@ -1,12 +1,11 @@
-from fastapi import FastAPI, HTTPException, Query, Path
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime, date
 from enum import Enum
 
 app = FastAPI()
-
-from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
@@ -50,45 +49,48 @@ class TaskOut(TaskBase):
     completed: bool
     created_at: datetime
 
-class ListModel(BaseModel):
+class ListCreate(BaseModel):
+    name: str
+
+class ListOut(BaseModel):
     name: str
 
 # --- TASK ENDPOINTS ---
 
-@app.post("/tasks", response_model=TaskOut, status_code=501)
+@app.post("/tasks", response_model=TaskOut, status_code=201)
 def create_task(task: TaskCreate):
     raise HTTPException(status_code=501, detail="Not implemented")
 
-@app.get("/tasks", response_model=List[TaskOut], status_code=501)
+@app.get("/tasks", response_model=List[TaskOut])
 def list_tasks(
     completed: Optional[bool] = None,
     tags: Optional[str] = Query(default=None, description="Comma-separated tags"),
-    list: Optional[str] = Query(default=None, description="Filter by list name")
+    list_name: Optional[str] = Query(default=None, alias="list", description="Filter by list name")
 ):
     raise HTTPException(status_code=501, detail="Not implemented")
 
-@app.get("/tasks/{task_id}", response_model=TaskOut, status_code=501)
+@app.get("/tasks/{task_id}", response_model=TaskOut)
 def get_task(task_id: str):
     raise HTTPException(status_code=501, detail="Not implemented")
 
-@app.put("/tasks/{task_id}", response_model=TaskOut, status_code=501)
+@app.put("/tasks/{task_id}", response_model=TaskOut)
 def update_task(task_id: str, update: TaskUpdate):
     raise HTTPException(status_code=501, detail="Not implemented")
 
-@app.delete("/tasks/{task_id}", status_code=501)
+@app.delete("/tasks/{task_id}", status_code=204)
 def delete_task(task_id: str):
     raise HTTPException(status_code=501, detail="Not implemented")
 
 # --- LIST ENDPOINTS ---
 
-@app.get("/lists", response_model=List[ListModel], status_code=501)
+@app.get("/lists", response_model=List[ListOut])
 def get_lists():
     raise HTTPException(status_code=501, detail="Not implemented")
 
-@app.post("/lists", response_model=ListModel, status_code=501)
-def create_list(list_data: ListModel):
+@app.post("/lists", response_model=ListOut, status_code=201)
+def create_list(list_data: ListCreate):
     raise HTTPException(status_code=501, detail="Not implemented")
 
-@app.delete("/lists/{name}", status_code=501)
+@app.delete("/lists/{name}", status_code=204)
 def delete_list(name: str):
     raise HTTPException(status_code=501, detail="Not implemented")
